@@ -37,20 +37,35 @@ Navigate to **APIs & Services → Library** and enable:
 ### 3. Configure OAuth Consent Screen
 
 1. Go to **APIs & Services → OAuth consent screen**
-2. Choose **External** (or **Internal** if using Google Workspace)
-3. Fill in the app name and your email
-4. Add these scopes:
+2. Click **Get started** (or **Edit App** if you already have one configured)
+3. Set **User type** to **External** (or **Internal** if using Google Workspace)
+4. Fill in the required fields:
+   - **App name**: e.g., "Workspace MCP Server"
+   - **User support email**: your email address
+   - **Developer contact email**: your email address
+5. On the **Scopes** step, click **Add or remove scopes** and add:
    - `https://www.googleapis.com/auth/calendar.events`
-   - `https://www.googleapis.com/auth/gmail.readonly`
+   - `https://www.googleapis.com/auth/gmail.modify`
    - `https://www.googleapis.com/auth/gmail.send`
    - `https://www.googleapis.com/auth/gmail.labels`
    - `https://www.googleapis.com/auth/drive.readonly`
    - `https://www.googleapis.com/auth/drive.file`
    - `https://www.googleapis.com/auth/documents`
    - `https://www.googleapis.com/auth/spreadsheets`
-5. Add your Google account as a test user (required for External consent screen)
+6. Save and continue
 
-### 4. Create OAuth Credentials
+### 4. Add Test Users (Required)
+
+While the app is in "Testing" publishing status (before Google verification), only explicitly listed test users can authenticate. If you skip this step you will get a **403: access_denied** error saying the app "has not completed the Google verification process".
+
+1. Go to **APIs & Services → OAuth consent screen**
+2. Under the **Audience** section (or **Test users** tab), click **Add users**
+3. Enter the Google account email you will authenticate with (e.g., `you@gmail.com`)
+4. Click **Save**
+
+You can add up to 100 test users. Only these accounts will be able to complete the OAuth flow while the app is in testing mode. You do **not** need to submit the app for Google verification — test users are sufficient for personal/self-hosted use.
+
+### 5. Create OAuth Credentials
 
 1. Go to **APIs & Services → Credentials**
 2. Click **Create Credentials → OAuth client ID**
@@ -58,7 +73,7 @@ Navigate to **APIs & Services → Library** and enable:
 4. Name it (e.g., "MCP Server")
 5. Click **Create** and note the **Client ID** and **Client Secret**
 
-### 5. Configure the MCP Server
+### 6. Configure the MCP Server
 
 Set environment variables:
 
@@ -76,7 +91,7 @@ Or create a config file at `~/.config/google-workspace-mcp/config.json`:
 }
 ```
 
-### 6. First Run
+### 7. First Run
 
 ```bash
 npm install
@@ -90,7 +105,7 @@ On first run, the server will:
 3. Store tokens securely in macOS Keychain + encrypted file
 4. Start the MCP server on stdio
 
-### 7. Claude Code Integration
+### 8. Claude Code Integration
 
 Add to your `~/.claude/settings.json`:
 

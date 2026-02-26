@@ -21,6 +21,10 @@ const DEFAULT_LIMITS: Record<string, RateLimitConfig> = {
   docs_update: { maxRequests: 20, windowMs: 60_000 },
   sheets_create: { maxRequests: 10, windowMs: 60_000 },
   sheets_update_range: { maxRequests: 30, windowMs: 60_000 },
+  gmail_archive: { maxRequests: 20, windowMs: 60_000 },
+  gmail_modify_labels: { maxRequests: 20, windowMs: 60_000 },
+  gmail_trash: { maxRequests: 10, windowMs: 60_000 },
+  gmail_create_label: { maxRequests: 15, windowMs: 60_000 },
   // Read operations have generous limits
   _default: { maxRequests: 60, windowMs: 60_000 },
 };

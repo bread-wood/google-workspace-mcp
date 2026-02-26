@@ -9,7 +9,13 @@ describe('assertNoDeleteTools', () => {
 
   it('passes with archive tool names', () => {
     expect(() =>
-      assertNoDeleteTools(['docs_archive', 'sheets_archive']),
+      assertNoDeleteTools(['docs_archive', 'sheets_archive', 'gmail_archive']),
+    ).not.toThrow();
+  });
+
+  it('passes with whitelisted gmail_trash', () => {
+    expect(() =>
+      assertNoDeleteTools(['gmail_trash']),
     ).not.toThrow();
   });
 

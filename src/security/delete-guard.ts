@@ -6,18 +6,21 @@
 import { logger } from '../logger.js';
 
 const FORBIDDEN_PATTERN = /\b(delete|remove|trash|purge|destroy)\b/i;
-const ALLOWED_EXCEPTIONS = new Set(['archive']); // archive tools are fine
+
+/** Exact tool names that are allowed despite matching the forbidden pattern. */
+const ALLOWED_TOOL_NAMES = new Set([
+  'docs_archive',
+  'sheets_archive',
+  'gmail_archive',
+  'gmail_trash',
+]);
 
 export function assertNoDeleteTools(toolNames: string[]): void {
   const violations: string[] = [];
 
   for (const name of toolNames) {
     if (FORBIDDEN_PATTERN.test(name)) {
-      // Check if it's an allowed exception
-      const isAllowed = [...ALLOWED_EXCEPTIONS].some((exception) =>
-        name.toLowerCase().includes(exception),
-      );
-      if (!isAllowed) {
+      if (!ALLOWED_TOOL_NAMES.has(name)) {
         violations.push(name);
       }
     }

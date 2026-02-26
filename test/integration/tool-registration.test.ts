@@ -9,6 +9,10 @@ const EXPECTED_TOOLS: string[] = [
   'gmail_send',
   'gmail_create_draft',
   'gmail_list_labels',
+  'gmail_archive',
+  'gmail_modify_labels',
+  'gmail_trash',
+  'gmail_create_label',
   'calendar_list_events',
   'calendar_get_event',
   'calendar_create_event',
@@ -45,14 +49,14 @@ describe('tool registration', () => {
     configDir: '/tmp/test-config',
   };
 
-  it('creates a server and registers all 23 tools', () => {
+  it('creates a server and registers all 27 tools', () => {
     const server = createServer(mockConfig, mockAuth);
     const registeredTools = (
       server as unknown as { _registeredTools: Record<string, unknown> }
     )._registeredTools;
 
     const toolNames = Object.keys(registeredTools);
-    expect(toolNames).toHaveLength(23);
+    expect(toolNames).toHaveLength(27);
 
     for (const expected of EXPECTED_TOOLS) {
       expect(toolNames).toContain(expected);
@@ -66,8 +70,11 @@ describe('tool registration', () => {
     )._registeredTools;
 
     const toolNames = Object.keys(registeredTools);
+    const ALLOWED_TOOL_NAMES = new Set([
+      'docs_archive', 'sheets_archive', 'gmail_archive', 'gmail_trash',
+    ]);
     const violations = toolNames.filter(
-      (name) => FORBIDDEN_PATTERN.test(name) && !name.includes('archive'),
+      (name) => FORBIDDEN_PATTERN.test(name) && !ALLOWED_TOOL_NAMES.has(name),
     );
     expect(violations).toEqual([]);
   });
