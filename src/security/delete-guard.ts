@@ -10,9 +10,12 @@ const FORBIDDEN_PATTERN = /\b(delete|remove|trash|purge|destroy)\b/i;
 /** Exact tool names that are allowed despite matching the forbidden pattern. */
 const ALLOWED_TOOL_NAMES = new Set([
   'docs_archive',
+  'docs_delete',
   'sheets_archive',
+  'sheets_delete',
   'gmail_archive',
   'gmail_trash',
+  'gmail_delete_label',
 ]);
 
 export function assertNoDeleteTools(toolNames: string[]): void {

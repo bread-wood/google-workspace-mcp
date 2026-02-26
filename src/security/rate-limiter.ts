@@ -25,6 +25,9 @@ const DEFAULT_LIMITS: Record<string, RateLimitConfig> = {
   gmail_modify_labels: { maxRequests: 20, windowMs: 60_000 },
   gmail_trash: { maxRequests: 10, windowMs: 60_000 },
   gmail_create_label: { maxRequests: 15, windowMs: 60_000 },
+  gmail_delete_label: { maxRequests: 10, windowMs: 60_000 },
+  docs_delete: { maxRequests: 5, windowMs: 60_000 },
+  sheets_delete: { maxRequests: 5, windowMs: 60_000 },
   // Read operations have generous limits
   _default: { maxRequests: 60, windowMs: 60_000 },
 };

@@ -19,6 +19,24 @@ describe('assertNoDeleteTools', () => {
     ).not.toThrow();
   });
 
+  it('passes with whitelisted gmail_delete_label', () => {
+    expect(() =>
+      assertNoDeleteTools(['gmail_delete_label']),
+    ).not.toThrow();
+  });
+
+  it('passes with whitelisted docs_delete', () => {
+    expect(() =>
+      assertNoDeleteTools(['docs_delete']),
+    ).not.toThrow();
+  });
+
+  it('passes with whitelisted sheets_delete', () => {
+    expect(() =>
+      assertNoDeleteTools(['sheets_delete']),
+    ).not.toThrow();
+  });
+
   it('throws on tool names containing "delete"', () => {
     // \b word boundary: underscore is a word char, so use hyphen/dot/standalone
     expect(() =>

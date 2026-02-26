@@ -4,7 +4,7 @@ A private, self-hosted [Model Context Protocol](https://modelcontextprotocol.io/
 
 ## Features
 
-- **27 tools** across 6 Google Workspace services
+- **30 tools** across 6 Google Workspace services
 - **Secure token storage**: AES-256-GCM encryption with macOS Keychain-stored keys
 - **No hard deletes**: Archive/trash semantics only — Docs and Sheets move to ARCHIVED folder, Gmail messages can be archived or trashed (30-day retention)
 - **Prompt injection defense**: 5-stage sanitization pipeline for all untrusted content
@@ -126,8 +126,8 @@ Add to your `~/.claude/settings.json`:
 
 ## Available Tools
 
-### Gmail (9 tools)
-- `gmail_search` — Search emails by query
+### Gmail (10 tools)
+- `gmail_search` — Search emails by query (up to 500 results)
 - `gmail_get_message` — Get full email content by ID
 - `gmail_send` — Send an email
 - `gmail_create_draft` — Create a draft email
@@ -136,6 +136,7 @@ Add to your `~/.claude/settings.json`:
 - `gmail_modify_labels` — Add/remove labels (mark read, categorize, etc.)
 - `gmail_trash` — Move messages to trash (30-day retention)
 - `gmail_create_label` — Create labels and sub-labels
+- `gmail_delete_label` — Delete a user-created label (messages are not deleted)
 
 ### Calendar (4 tools)
 - `calendar_list_events` — List events in a time range
@@ -149,25 +150,27 @@ Add to your `~/.claude/settings.json`:
 - `drive_download` — Download/export file content
 - `drive_upload` — Upload a file to Drive
 
-### Docs (4 tools)
+### Docs (5 tools)
 - `docs_get` — Get document content
 - `docs_create` — Create a new document
 - `docs_update` — Update document content
 - `docs_archive` — Archive document (move to ARCHIVED folder)
+- `docs_delete` — Permanently delete a document (irreversible)
 
-### Sheets (5 tools)
+### Sheets (6 tools)
 - `sheets_get` — Get spreadsheet metadata
 - `sheets_create` — Create a new spreadsheet
 - `sheets_read_range` — Read cell values from a range
 - `sheets_update_range` — Write cell values to a range
 - `sheets_archive` — Archive spreadsheet (move to ARCHIVED folder)
+- `sheets_delete` — Permanently delete a spreadsheet (irreversible)
 
 ### Auth (1 tool)
 - `auth_status` — Check authentication status and scopes
 
 ## Security
 
-- **No hard deletes**: The server enforces no-delete semantics at the application layer. Docs/Sheets archive operations move files to an ARCHIVED folder in Drive. Gmail supports archive (remove from inbox) and trash (reversible, 30-day retention). HTTP DELETE requests are blocked by an interceptor.
+- **Controlled deletions**: Docs/Sheets support both soft archive (move to ARCHIVED folder) and permanent deletion. Gmail supports archive, trash (30-day retention), and label deletion. HTTP DELETE requests are blocked by default, with a targeted allowlist for specific safe operations (label deletion, file deletion).
 - **Prompt injection defense**: All content from external sources (emails, documents, calendar events) passes through a 5-stage sanitization pipeline before being returned to the LLM.
 - **Token security**: OAuth tokens are encrypted with AES-256-GCM. The encryption key is stored in macOS Keychain.
 - **Rate limiting**: Per-tool rate limits prevent runaway API usage.

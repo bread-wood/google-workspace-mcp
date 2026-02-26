@@ -5,20 +5,32 @@ import { logger } from '../logger.js';
 
 const BLOCKED_METHODS = new Set(['DELETE']);
 
+/** URL patterns where HTTP DELETE is explicitly permitted. */
+const ALLOWED_DELETE_PATTERNS = [
+  /^https:\/\/gmail\.googleapis\.com\/gmail\/v1\/users\/me\/labels\/[^/]+$/,
+  /^https:\/\/www\.googleapis\.com\/drive\/v3\/files\/[^/]+$/,
+];
+
 /**
- * Install a global request interceptor that rejects HTTP DELETE calls.
- * Defense-in-depth: even though no delete tools exist, this catches programming errors.
+ * Install a global request interceptor that rejects HTTP DELETE calls
+ * unless the URL matches an explicit allowlist.
+ * Defense-in-depth: catches programming errors and blocks unintended deletions.
  */
 function installDeleteGuardInterceptor(auth: OAuth2Client): void {
   const originalRequest = auth.request.bind(auth);
   auth.request = async function <T>(opts: GaxiosOptions): Promise<GaxiosResponse<T>> {
     const method = (opts.method || 'GET').toUpperCase();
     if (BLOCKED_METHODS.has(method)) {
-      logger.error('DELETE request blocked by interceptor', {
-        url: opts.url,
-        method,
-      });
-      throw new Error('HTTP DELETE requests are blocked by security policy. Use archive operations instead.');
+      const url = String(opts.url || '');
+      const allowed = ALLOWED_DELETE_PATTERNS.some((pattern) => pattern.test(url));
+      if (!allowed) {
+        logger.error('DELETE request blocked by interceptor', {
+          url: opts.url,
+          method,
+        });
+        throw new Error('HTTP DELETE requests are blocked by security policy. Use archive operations instead.');
+      }
+      logger.info('DELETE request allowed by interceptor', { url });
     }
     return originalRequest<T>(opts);
   };
