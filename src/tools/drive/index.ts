@@ -4,6 +4,8 @@ import { registerDriveGetMetadata } from './get-metadata.js';
 import { registerDriveDownload } from './download.js';
 import { registerDriveUpload } from './upload.js';
 import { registerDriveCreateFolder } from './create-folder.js';
+import { registerDriveMove } from './move.js';
+import { registerDriveCreatePdf } from './create-pdf.js';
 
 export const registerDriveTools: ToolRegistrar = (server, context) => {
   registerDriveSearch(server, context);
@@ -11,4 +13,6 @@ export const registerDriveTools: ToolRegistrar = (server, context) => {
   registerDriveDownload(server, context);
   registerDriveUpload(server, context);
   registerDriveCreateFolder(server, context);
+  registerDriveMove(server, context);
+  registerDriveCreatePdf(server, context);
 };

@@ -4,7 +4,7 @@ A private, self-hosted [Model Context Protocol](https://modelcontextprotocol.io/
 
 ## Features
 
-- **31 tools** across 6 Google Workspace services
+- **33 tools** across 6 Google Workspace services
 - **Secure token storage**: AES-256-GCM encryption with macOS Keychain-stored keys
 - **No hard deletes**: Archive/trash semantics only — Docs and Sheets move to ARCHIVED folder, Gmail messages can be archived or trashed (30-day retention)
 - **Prompt injection defense**: 5-stage sanitization pipeline for all untrusted content
@@ -144,12 +144,14 @@ Add to your `~/.claude/settings.json`:
 - `calendar_create_event` — Create a calendar event
 - `calendar_update_event` — Update an existing event
 
-### Drive (5 tools)
+### Drive (7 tools)
 - `drive_search` — Search files in Drive
 - `drive_get_file_metadata` — Get file metadata
 - `drive_download` — Download/export file content
 - `drive_upload` — Upload a file to Drive
 - `drive_create_folder` — Create a new folder in Drive
+- `drive_move` — Move a file or folder to a different parent folder
+- `drive_create_pdf` — Generate a formatted PDF from text content and upload to Drive
 
 ### Docs (5 tools)
 - `docs_get` — Get document content
