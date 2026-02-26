@@ -4,9 +4,9 @@ A private, self-hosted [Model Context Protocol](https://modelcontextprotocol.io/
 
 ## Features
 
-- **23 tools** across 6 Google Workspace services
+- **27 tools** across 6 Google Workspace services
 - **Secure token storage**: AES-256-GCM encryption with macOS Keychain-stored keys
-- **No hard deletes**: Archive-only semantics for Docs and Sheets (moves to ARCHIVED folder)
+- **No hard deletes**: Archive/trash semantics only — Docs and Sheets move to ARCHIVED folder, Gmail messages can be archived or trashed (30-day retention)
 - **Prompt injection defense**: 5-stage sanitization pipeline for all untrusted content
 - **OWASP-aligned security**: Input validation, rate limiting, structured logging, PKCE OAuth2
 
@@ -126,12 +126,16 @@ Add to your `~/.claude/settings.json`:
 
 ## Available Tools
 
-### Gmail (5 tools)
+### Gmail (9 tools)
 - `gmail_search` — Search emails by query
 - `gmail_get_message` — Get full email content by ID
 - `gmail_send` — Send an email
 - `gmail_create_draft` — Create a draft email
 - `gmail_list_labels` — List all Gmail labels
+- `gmail_archive` — Archive messages (remove from inbox)
+- `gmail_modify_labels` — Add/remove labels (mark read, categorize, etc.)
+- `gmail_trash` — Move messages to trash (30-day retention)
+- `gmail_create_label` — Create labels and sub-labels
 
 ### Calendar (4 tools)
 - `calendar_list_events` — List events in a time range
@@ -163,7 +167,7 @@ Add to your `~/.claude/settings.json`:
 
 ## Security
 
-- **No hard deletes**: The server enforces no-delete semantics at the application layer. Archive operations move files to an ARCHIVED folder in Drive.
+- **No hard deletes**: The server enforces no-delete semantics at the application layer. Docs/Sheets archive operations move files to an ARCHIVED folder in Drive. Gmail supports archive (remove from inbox) and trash (reversible, 30-day retention). HTTP DELETE requests are blocked by an interceptor.
 - **Prompt injection defense**: All content from external sources (emails, documents, calendar events) passes through a 5-stage sanitization pipeline before being returned to the LLM.
 - **Token security**: OAuth tokens are encrypted with AES-256-GCM. The encryption key is stored in macOS Keychain.
 - **Rate limiting**: Per-tool rate limits prevent runaway API usage.
