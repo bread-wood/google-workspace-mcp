@@ -22,6 +22,7 @@ const EXPECTED_TOOLS: string[] = [
   'drive_get_file_metadata',
   'drive_download',
   'drive_upload',
+  'drive_create_folder',
   'docs_get',
   'docs_create',
   'docs_update',
@@ -59,7 +60,7 @@ describe('tool registration', () => {
     )._registeredTools;
 
     const toolNames = Object.keys(registeredTools);
-    expect(toolNames).toHaveLength(30);
+    expect(toolNames).toHaveLength(31);
 
     for (const expected of EXPECTED_TOOLS) {
       expect(toolNames).toContain(expected);
