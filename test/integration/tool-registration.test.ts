@@ -1,0 +1,74 @@
+import { createServer } from '../../src/server.js';
+import type { OAuth2Client } from 'google-auth-library';
+import type { Config } from '../../src/config.js';
+
+const EXPECTED_TOOLS: string[] = [
+  'auth_status',
+  'gmail_search',
+  'gmail_get_message',
+  'gmail_send',
+  'gmail_create_draft',
+  'gmail_list_labels',
+  'calendar_list_events',
+  'calendar_get_event',
+  'calendar_create_event',
+  'calendar_update_event',
+  'drive_search',
+  'drive_get_file_metadata',
+  'drive_download',
+  'drive_upload',
+  'docs_get',
+  'docs_create',
+  'docs_update',
+  'docs_archive',
+  'sheets_get',
+  'sheets_create',
+  'sheets_read_range',
+  'sheets_update_range',
+  'sheets_archive',
+];
+
+const FORBIDDEN_PATTERN = /\b(delete|remove|trash|purge|destroy)\b/i;
+
+describe('tool registration', () => {
+  const mockAuth = {
+    credentials: { access_token: 'test' },
+  } as unknown as OAuth2Client;
+
+  const mockConfig: Config = {
+    clientId: 'test-client-id',
+    clientSecret: 'test-client-secret',
+    maxContentLength: 50_000,
+    authTimeoutMs: 300_000,
+    logLevel: 'info',
+    archiveFolderName: 'ARCHIVED',
+    configDir: '/tmp/test-config',
+  };
+
+  it('creates a server and registers all 23 tools', () => {
+    const server = createServer(mockConfig, mockAuth);
+    const registeredTools = (
+      server as unknown as { _registeredTools: Record<string, unknown> }
+    )._registeredTools;
+
+    const toolNames = Object.keys(registeredTools);
+    expect(toolNames).toHaveLength(23);
+
+    for (const expected of EXPECTED_TOOLS) {
+      expect(toolNames).toContain(expected);
+    }
+  });
+
+  it('no tool names match delete/remove/trash/purge/destroy pattern', () => {
+    const server = createServer(mockConfig, mockAuth);
+    const registeredTools = (
+      server as unknown as { _registeredTools: Record<string, unknown> }
+    )._registeredTools;
+
+    const toolNames = Object.keys(registeredTools);
+    const violations = toolNames.filter(
+      (name) => FORBIDDEN_PATTERN.test(name) && !name.includes('archive'),
+    );
+    expect(violations).toEqual([]);
+  });
+});
