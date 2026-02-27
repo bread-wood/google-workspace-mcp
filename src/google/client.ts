@@ -9,6 +9,7 @@ const BLOCKED_METHODS = new Set(['DELETE']);
 const ALLOWED_DELETE_PATTERNS = [
   /^https:\/\/gmail\.googleapis\.com\/gmail\/v1\/users\/me\/labels\/[^/]+$/,
   /^https:\/\/www\.googleapis\.com\/drive\/v3\/files\/[^/]+$/,
+  /^https:\/\/www\.googleapis\.com\/calendar\/v3\/calendars\/[^/]+\/events\/[^/]+$/,
 ];
 
 /**
