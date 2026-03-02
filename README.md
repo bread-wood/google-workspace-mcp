@@ -48,6 +48,7 @@ Navigate to **APIs & Services → Library** and enable:
    - `https://www.googleapis.com/auth/gmail.modify`
    - `https://www.googleapis.com/auth/gmail.send`
    - `https://www.googleapis.com/auth/gmail.labels`
+   - `https://www.googleapis.com/auth/gmail.settings.basic`
    - `https://www.googleapis.com/auth/drive.readonly`
    - `https://www.googleapis.com/auth/drive.file`
    - `https://www.googleapis.com/auth/documents`
@@ -127,6 +128,9 @@ Add to your `~/.claude/settings.json`:
 ## Available Tools
 
 ### Gmail (10 tools)
+
+> **Note for existing users**: The `gmail.settings.basic` scope was added to enable filter management tools. If you authenticated before this scope was introduced, you will be prompted to re-authenticate the next time your token refresh fails. Re-authentication happens automatically — simply follow the browser prompt when it appears.
+
 - `gmail_search` — Search emails by query (up to 500 results)
 - `gmail_get_message` — Get full email content by ID
 - `gmail_send` — Send an email
