@@ -16,6 +16,7 @@ const ALLOWED_TOOL_NAMES = new Set([
   'gmail_archive',
   'gmail_trash',
   'gmail_delete_label',
+  'gmail_delete_filter',
   'calendar_delete_event',
 ]);
 
