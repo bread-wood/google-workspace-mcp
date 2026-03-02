@@ -4,7 +4,7 @@ A private, self-hosted [Model Context Protocol](https://modelcontextprotocol.io/
 
 ## Features
 
-- **37 tools** across 6 Google Workspace services
+- **36 tools** across 6 Google Workspace services
 - **Secure token storage**: AES-256-GCM encryption with macOS Keychain-stored keys
 - **No hard deletes**: Archive/trash semantics only — Docs and Sheets move to ARCHIVED folder, Gmail messages can be archived or trashed (30-day retention)
 - **Prompt injection defense**: 5-stage sanitization pipeline for all untrusted content
