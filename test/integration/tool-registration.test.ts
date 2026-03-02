@@ -14,6 +14,8 @@ const EXPECTED_TOOLS: string[] = [
   'gmail_trash',
   'gmail_create_label',
   'gmail_delete_label',
+  'gmail_list_filters',
+  'gmail_create_filter',
   'calendar_list_events',
   'calendar_get_event',
   'calendar_create_event',
@@ -56,14 +58,14 @@ describe('tool registration', () => {
     configDir: '/tmp/test-config',
   };
 
-  it('creates a server and registers all 34 tools', () => {
+  it('creates a server and registers all 36 tools', () => {
     const server = createServer(mockConfig, mockAuth);
     const registeredTools = (
       server as unknown as { _registeredTools: Record<string, unknown> }
     )._registeredTools;
 
     const toolNames = Object.keys(registeredTools);
-    expect(toolNames).toHaveLength(34);
+    expect(toolNames).toHaveLength(36);
 
     for (const expected of EXPECTED_TOOLS) {
       expect(toolNames).toContain(expected);

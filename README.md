@@ -4,7 +4,7 @@ A private, self-hosted [Model Context Protocol](https://modelcontextprotocol.io/
 
 ## Features
 
-- **33 tools** across 6 Google Workspace services
+- **37 tools** across 6 Google Workspace services
 - **Secure token storage**: AES-256-GCM encryption with macOS Keychain-stored keys
 - **No hard deletes**: Archive/trash semantics only — Docs and Sheets move to ARCHIVED folder, Gmail messages can be archived or trashed (30-day retention)
 - **Prompt injection defense**: 5-stage sanitization pipeline for all untrusted content
@@ -127,7 +127,7 @@ Add to your `~/.claude/settings.json`:
 
 ## Available Tools
 
-### Gmail (10 tools)
+### Gmail (13 tools)
 
 > **Note for existing users**: The `gmail.settings.basic` scope was added to enable filter management tools. If you authenticated before this scope was introduced, you will be prompted to re-authenticate the next time your token refresh fails. Re-authentication happens automatically — simply follow the browser prompt when it appears.
 
@@ -141,6 +141,9 @@ Add to your `~/.claude/settings.json`:
 - `gmail_trash` — Move messages to trash (30-day retention)
 - `gmail_create_label` — Create labels and sub-labels
 - `gmail_delete_label` — Delete a user-created label (messages are not deleted)
+- `gmail_list_filters` — List all Gmail filters with their criteria and actions
+- `gmail_delete_filter` — Delete a Gmail filter by ID (use `gmail_list_filters` to find IDs)
+- `gmail_create_filter` — Create a Gmail filter with criteria and automated actions (label, archive, mark read, star, forward)
 
 ### Calendar (4 tools)
 - `calendar_list_events` — List events in a time range
