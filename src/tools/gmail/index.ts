@@ -11,6 +11,7 @@ import { registerGmailCreateLabel } from './create-label.js';
 import { registerGmailDeleteLabel } from './delete-label.js';
 import { registerGmailListFilters } from './list-filters.js';
 import { registerGmailCreateFilter } from './create-filter.js';
+import { registerGmailDeleteFilter } from './delete-filter.js';
 
 export const registerGmailTools: ToolRegistrar = (server, context) => {
   registerGmailSearch(server, context);
@@ -25,4 +26,5 @@ export const registerGmailTools: ToolRegistrar = (server, context) => {
   registerGmailDeleteLabel(server, context);
   registerGmailListFilters(server, context);
   registerGmailCreateFilter(server, context);
+  registerGmailDeleteFilter(server, context);
 };
