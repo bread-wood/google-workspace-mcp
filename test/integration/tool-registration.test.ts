@@ -18,6 +18,7 @@ const EXPECTED_TOOLS: string[] = [
   'calendar_get_event',
   'calendar_create_event',
   'calendar_update_event',
+  'calendar_delete_event',
   'drive_search',
   'drive_get_file_metadata',
   'drive_download',
@@ -55,14 +56,14 @@ describe('tool registration', () => {
     configDir: '/tmp/test-config',
   };
 
-  it('creates a server and registers all 28 tools', () => {
+  it('creates a server and registers all 34 tools', () => {
     const server = createServer(mockConfig, mockAuth);
     const registeredTools = (
       server as unknown as { _registeredTools: Record<string, unknown> }
     )._registeredTools;
 
     const toolNames = Object.keys(registeredTools);
-    expect(toolNames).toHaveLength(33);
+    expect(toolNames).toHaveLength(34);
 
     for (const expected of EXPECTED_TOOLS) {
       expect(toolNames).toContain(expected);
