@@ -80,7 +80,8 @@ describe('tool registration', () => {
 
     const toolNames = Object.keys(registeredTools);
     const ALLOWED_TOOL_NAMES = new Set([
-      'docs_archive', 'docs_delete', 'sheets_archive', 'sheets_delete', 'gmail_archive', 'gmail_trash', 'gmail_delete_label',
+      'docs_archive', 'docs_delete', 'sheets_archive', 'sheets_delete',
+      'gmail_archive', 'gmail_trash', 'gmail_delete_label', 'calendar_delete_event',
     ]);
     const violations = toolNames.filter(
       (name) => FORBIDDEN_PATTERN.test(name) && !ALLOWED_TOOL_NAMES.has(name),
