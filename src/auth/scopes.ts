@@ -1,4 +1,5 @@
 export const SCOPES = {
+  CALENDAR: 'https://www.googleapis.com/auth/calendar',
   CALENDAR_EVENTS: 'https://www.googleapis.com/auth/calendar.events',
   GMAIL_MODIFY: 'https://www.googleapis.com/auth/gmail.modify',
   GMAIL_SEND: 'https://www.googleapis.com/auth/gmail.send',
