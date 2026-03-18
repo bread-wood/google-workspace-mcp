@@ -9,7 +9,8 @@ export type ContentSource =
   | 'calendar_event'
   | 'document'
   | 'spreadsheet'
-  | 'drive_file';
+  | 'drive_file'
+  | 'presentation';
 
 const SOURCE_LABELS: Record<ContentSource, string> = {
   email: 'EMAIL MESSAGE',
@@ -17,6 +18,7 @@ const SOURCE_LABELS: Record<ContentSource, string> = {
   document: 'DOCUMENT',
   spreadsheet: 'SPREADSHEET',
   drive_file: 'DRIVE FILE',
+  presentation: 'PRESENTATION',
 };
 
 export function wrapInEnvelope(content: string, source: ContentSource): string {

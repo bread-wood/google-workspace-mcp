@@ -22,6 +22,7 @@ const EXPECTED_TOOLS: string[] = [
   'calendar_create_event',
   'calendar_update_event',
   'calendar_delete_event',
+  'calendar_create_calendar',
   'drive_search',
   'drive_get_file_metadata',
   'drive_download',
@@ -40,6 +41,11 @@ const EXPECTED_TOOLS: string[] = [
   'sheets_update_range',
   'sheets_archive',
   'sheets_delete',
+  'slides_get',
+  'slides_create',
+  'slides_add_slide',
+  'slides_archive',
+  'slides_delete',
 ];
 
 const FORBIDDEN_PATTERN = /\b(delete|remove|trash|purge|destroy)\b/i;
@@ -59,14 +65,14 @@ describe('tool registration', () => {
     configDir: '/tmp/test-config',
   };
 
-  it('creates a server and registers all 37 tools', () => {
+  it('creates a server and registers all 43 tools', () => {
     const server = createServer(mockConfig, mockAuth);
     const registeredTools = (
       server as unknown as { _registeredTools: Record<string, unknown> }
     )._registeredTools;
 
     const toolNames = Object.keys(registeredTools);
-    expect(toolNames).toHaveLength(37);
+    expect(toolNames).toHaveLength(43);
 
     for (const expected of EXPECTED_TOOLS) {
       expect(toolNames).toContain(expected);
@@ -82,6 +88,7 @@ describe('tool registration', () => {
     const toolNames = Object.keys(registeredTools);
     const ALLOWED_TOOL_NAMES = new Set([
       'docs_archive', 'docs_delete', 'sheets_archive', 'sheets_delete',
+      'slides_archive', 'slides_delete',
       'gmail_archive', 'gmail_trash', 'gmail_delete_label', 'gmail_delete_filter', 'calendar_delete_event',
     ]);
     const violations = toolNames.filter(

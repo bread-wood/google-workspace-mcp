@@ -1,12 +1,12 @@
 # Google Workspace MCP Server
 
-A private, self-hosted [Model Context Protocol](https://modelcontextprotocol.io/) server that gives Claude authenticated access to Google Calendar, Gmail, Drive, Docs, and Sheets via stdio transport.
+A private, self-hosted [Model Context Protocol](https://modelcontextprotocol.io/) server that gives Claude authenticated access to Google Calendar, Gmail, Drive, Docs, Sheets, and Slides via stdio transport.
 
 ## Features
 
-- **37 tools** across 6 Google Workspace services
+- **43 tools** across 7 Google Workspace services
 - **Secure token storage**: AES-256-GCM encryption with macOS Keychain-stored keys
-- **No hard deletes**: Archive/trash semantics only — Docs and Sheets move to ARCHIVED folder, Gmail messages can be archived or trashed (30-day retention)
+- **No hard deletes**: Archive/trash semantics only — Docs, Sheets, and Slides move to ARCHIVED folder, Gmail messages can be archived or trashed (30-day retention)
 - **Prompt injection defense**: 5-stage sanitization pipeline for all untrusted content
 - **OWASP-aligned security**: Input validation, rate limiting, structured logging, PKCE OAuth2
 
@@ -33,6 +33,7 @@ Navigate to **APIs & Services → Library** and enable:
 - Google Drive API
 - Google Docs API
 - Google Sheets API
+- Google Slides API
 
 ### 3. Configure OAuth Consent Screen
 
@@ -53,6 +54,7 @@ Navigate to **APIs & Services → Library** and enable:
    - `https://www.googleapis.com/auth/drive.file`
    - `https://www.googleapis.com/auth/documents`
    - `https://www.googleapis.com/auth/spreadsheets`
+   - `https://www.googleapis.com/auth/presentations`
 6. Save and continue
 
 ### 4. Add Test Users (Required)
@@ -145,10 +147,11 @@ Add to your `~/.claude/settings.json`:
 - `gmail_delete_filter` — Delete a Gmail filter by ID (use `gmail_list_filters` to find IDs)
 - `gmail_create_filter` — Create a Gmail filter with criteria and automated actions (label, archive, mark read, star, forward)
 
-### Calendar (4 tools)
+### Calendar (5 tools)
 - `calendar_list_events` — List events in a time range
 - `calendar_get_event` — Get full event details
 - `calendar_create_event` — Create a calendar event
+- `calendar_create_calendar` — Create a new calendar
 - `calendar_update_event` — Update an existing event
 
 ### Drive (7 tools)
@@ -175,12 +178,19 @@ Add to your `~/.claude/settings.json`:
 - `sheets_archive` — Archive spreadsheet (move to ARCHIVED folder)
 - `sheets_delete` — Permanently delete a spreadsheet (irreversible)
 
+### Slides (5 tools)
+- `slides_get` — Get presentation content (title, slide count, extracted text)
+- `slides_create` — Create a new presentation
+- `slides_add_slide` — Add a slide with layout and placeholder text
+- `slides_archive` — Archive presentation (move to ARCHIVED folder)
+- `slides_delete` — Permanently delete a presentation (irreversible)
+
 ### Auth (1 tool)
 - `auth_status` — Check authentication status and scopes
 
 ## Security
 
-- **Controlled deletions**: Docs/Sheets support both soft archive (move to ARCHIVED folder) and permanent deletion. Gmail supports archive, trash (30-day retention), and label deletion. HTTP DELETE requests are blocked by default, with a targeted allowlist for specific safe operations (label deletion, file deletion).
+- **Controlled deletions**: Docs/Sheets/Slides support both soft archive (move to ARCHIVED folder) and permanent deletion. Gmail supports archive, trash (30-day retention), and label deletion. HTTP DELETE requests are blocked by default, with a targeted allowlist for specific safe operations (label deletion, file deletion).
 - **Prompt injection defense**: All content from external sources (emails, documents, calendar events) passes through a 5-stage sanitization pipeline before being returned to the LLM.
 - **Token security**: OAuth tokens are encrypted with AES-256-GCM. The encryption key is stored in macOS Keychain.
 - **Rate limiting**: Per-tool rate limits prevent runaway API usage.

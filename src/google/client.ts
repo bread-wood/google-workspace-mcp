@@ -62,3 +62,7 @@ export function getDocsClient() {
 export function getSheetsClient() {
   return google.sheets('v4');
 }
+
+export function getSlidesClient() {
+  return google.slides('v1');
+}

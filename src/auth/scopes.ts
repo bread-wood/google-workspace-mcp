@@ -9,6 +9,7 @@ export const SCOPES = {
   DRIVE_FILE: 'https://www.googleapis.com/auth/drive.file',
   DOCUMENTS: 'https://www.googleapis.com/auth/documents',
   SPREADSHEETS: 'https://www.googleapis.com/auth/spreadsheets',
+  PRESENTATIONS: 'https://www.googleapis.com/auth/presentations',
 } as const;
 
 export const ALL_SCOPES = Object.values(SCOPES);

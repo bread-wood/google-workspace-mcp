@@ -33,6 +33,9 @@ const DEFAULT_LIMITS: Record<string, RateLimitConfig> = {
   gmail_delete_filter: { maxRequests: 10, windowMs: 60_000 },
   docs_delete: { maxRequests: 5, windowMs: 60_000 },
   sheets_delete: { maxRequests: 5, windowMs: 60_000 },
+  slides_create: { maxRequests: 10, windowMs: 60_000 },
+  slides_add_slide: { maxRequests: 30, windowMs: 60_000 },
+  slides_delete: { maxRequests: 5, windowMs: 60_000 },
   // Read operations have generous limits
   _default: { maxRequests: 60, windowMs: 60_000 },
 };
