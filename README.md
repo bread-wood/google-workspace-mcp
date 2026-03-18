@@ -207,6 +207,24 @@ Add to your `~/.claude/settings.json`:
 | `LOG_LEVEL` | `info` | Log level: debug, info, warn, error |
 | `ARCHIVE_FOLDER_NAME` | `ARCHIVED` | Name of the archive folder in Drive |
 
+## Troubleshooting
+
+### "Permission denied. The requested scope may not be authorized." despite valid token
+
+If `auth_status` shows the required scope is present but a tool still returns a 403, the Google API itself is not enabled in your Cloud project. Each Google API must be enabled separately — granting an OAuth scope is not enough.
+
+Go to **APIs & Services → Library** in the Cloud Console and enable the API for the failing service (e.g., **Google Slides API** for `slides_*` tools). After enabling, retry immediately — no re-authentication is needed.
+
+### Re-authenticating to pick up new scopes
+
+If new scopes were added to the server after your initial auth, your stored token won't include them. Delete the token file to force a fresh OAuth flow:
+
+```bash
+rm ~/.config/google-workspace-mcp/tokens.enc
+```
+
+Then restart the MCP server (e.g., run `/mcp` in Claude Code). The browser will open for re-authentication — authorize all requested scopes.
+
 ## Development
 
 ```bash
