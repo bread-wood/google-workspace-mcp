@@ -13,6 +13,7 @@ import { registerCalendarTools } from './tools/calendar/index.js';
 import { registerDriveTools } from './tools/drive/index.js';
 import { registerDocsTools } from './tools/docs/index.js';
 import { registerSheetsTools } from './tools/sheets/index.js';
+import { registerSlidesTools } from './tools/slides/index.js';
 
 export function createServer(config: Config, auth: OAuth2Client): McpServer {
   const server = new McpServer({
@@ -33,6 +34,7 @@ export function createServer(config: Config, auth: OAuth2Client): McpServer {
   registerDriveTools(server, context);
   registerDocsTools(server, context);
   registerSheetsTools(server, context);
+  registerSlidesTools(server, context);
 
   // Verify no delete tools were registered
   // Access internal tool registry to get tool names
